@@ -1,5 +1,9 @@
 import React, { PureComponent } from 'react';
-import { View, Animated, Easing, TouchableOpacity, ViewPropTypes } from 'react-native';
+
+import stylePropType from "react-style-proptype"
+
+
+import { View, Animated, Easing, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import styles from './Pagination.style';
 
@@ -12,15 +16,15 @@ export default class PaginationDot extends PureComponent {
         activeOpacity: PropTypes.number,
         carouselRef: PropTypes.object,
         color: PropTypes.string,
-        containerStyle: ViewPropTypes ? ViewPropTypes.style : View.propTypes.style,
+        containerStyle: stylePropType,
         inactiveColor: PropTypes.string,
-        inactiveStyle: ViewPropTypes ? ViewPropTypes.style : View.propTypes.style,
+        inactiveStyle: stylePropType,
         index: PropTypes.number,
-        style: ViewPropTypes ? ViewPropTypes.style : View.propTypes.style,
+        style: stylePropType,
         tappable: PropTypes.bool
     };
 
-    constructor (props) {
+    constructor(props) {
         super(props);
         this.state = {
             animColor: new Animated.Value(0),
@@ -29,19 +33,19 @@ export default class PaginationDot extends PureComponent {
         };
     }
 
-    componentDidMount () {
+    componentDidMount() {
         if (this.props.active) {
             this._animate(1);
         }
     }
 
-    componentDidUpdate (prevProps) {
+    componentDidUpdate(prevProps) {
         if (prevProps.active !== this.props.active) {
             this._animate(this.props.active ? 1 : 0);
         }
     }
 
-    _animate (toValue = 0) {
+    _animate(toValue = 0) {
         const { animColor, animOpacity, animTransform } = this.state;
         const { animatedDuration, animatedFriction, animatedTension } = this.props
 
@@ -74,12 +78,12 @@ export default class PaginationDot extends PureComponent {
         Animated.parallel(animations).start();
     }
 
-    get _shouldAnimateColor () {
+    get _shouldAnimateColor() {
         const { color, inactiveColor } = this.props;
         return color && inactiveColor;
     }
 
-    render () {
+    render() {
         const { animColor, animOpacity, animTransform } = this.state;
         const {
             active,
@@ -143,11 +147,11 @@ export default class PaginationDot extends PureComponent {
 
         return (
             <TouchableOpacity
-              accessible={false}
-              style={dotContainerStyle}
-              activeOpacity={tappable ? activeOpacity : 1}
-              onPress={onPress}
-              delayPressIn={delayPressInDot}
+                accessible={false}
+                style={dotContainerStyle}
+                activeOpacity={tappable ? activeOpacity : 1}
+                onPress={onPress}
+                delayPressIn={delayPressInDot}
             >
                 <Animated.View style={dotStyle} />
             </TouchableOpacity>
